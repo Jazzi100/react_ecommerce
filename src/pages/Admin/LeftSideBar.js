@@ -18,7 +18,7 @@ function LeftSideBar() {
               <p>
                 <a href="/add-product">Add Product</a>
               </p>
-              <p>Edit Products</p>
+
               <p>Delete Products</p>
             </Accordion.Body>
           </Accordion.Item>
@@ -36,7 +36,9 @@ function LeftSideBar() {
               <p>
                 <a href="/all-users">All Users</a>
               </p>
-              <p>Add User</p>
+              <p>
+                <a href="/admin-add-user">Add User</a>
+              </p>
               <p>Edit User</p>
             </Accordion.Body>
           </Accordion.Item>

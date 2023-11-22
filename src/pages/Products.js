@@ -8,6 +8,7 @@ import "./productPageStyleSheet.css";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [qty, setQty] = useState("");
+  const [cart, setCart] = useState([]);
   useEffect(() => {
     axios({
       method: "get",
@@ -25,11 +26,98 @@ const Products = () => {
       });
   }, []);
 
+  //-----add to cart function-----
+
+  // useEffect(() => {
+  //   // Retrieve the cart items from local storage
+  //   const storedCartItems = localStorage.getItem("cartItems");
+  //   if (storedCartItems) {
+  //     setCartItems(JSON.parse(storedCartItems));
+  //   }
+  // }, []);
+
   const addToCart = (item) => {
-    console.log("ID : " + item._id);
-    console.log("Quantity : " + qty);
-    
+    let data = {
+      p_id: item._id,
+      qty: qty,
+    };
   };
+  //   console.log("add to cart line no 44 : " + item._id);
+  //   const storedCartItems = localStorage.getItem("cartItems");
+  //   console.log("storedCartItems : " + storedCartItems);
+  //   if (!storedCartItems) {
+  //     localStorage.setItem("cartItems", JSON.stringify(data));
+  //   } else {
+  //     const storedCartItems = localStorage.getItem("cartItems");
+  //     console.log("storedCartItems line no 51 : " + storedCartItems);
+
+  //     console.log("stored Cart Items ID : " + storedCartItems.p_id);
+  //     console.log("Item ID : " + item._id);
+  //     if (storedCartItems.p_id === item._id) {
+  //       console.log("if condition m agya line no 48");
+  //       updateCartItem(item);
+  //     } else {
+  //       setCartItems([...cartItems, data]);
+  //       // Save the updated cart items to local storage
+  //       localStorage.setItem("cartItems", JSON.stringify([...cartItems, data]));
+  //     }
+  //   }
+
+  //   const updateCartItem = (item) => {
+  //     const elementIndex = data.findIndex((c) => c.p_id === item.p_id);
+  //     if (elementIndex > -1) {
+  //       data[elementIndex] = item;
+  //       //storeCartInLocalStorage();
+  //     }
+  //   };
+  //   // setCartItems([...cartItems, data]);
+  //   // // Save the updated cart items to local storage
+  //   // localStorage.setItem("cartItems", JSON.stringify([...cartItems, data]));
+  // };
+
+  //--------------------------------
+  // const addToCart = async (item) => {
+  //   let data = {
+  //     p_id: item._id,
+  //     qty: qty,
+  //   };
+
+  //   //-------------------------------------------
+  //   // const existingCartItems =
+  //   //   JSON.parse(localStorage.getItem("cartItems")) || [];
+
+  //   // //const updatedCartItems = [...existingCartItems, data];
+
+  //   // const updateCartItem = (item) => {
+  //   //   const elementIndex = data.findIndex((c) => c.p_id === item.p_id);
+  //   //   if (elementIndex > -1) {
+  //   //     data[elementIndex] = item;
+  //   //     //storeCartInLocalStorage();
+  //   //   }
+  //   // };
+
+  //   // localStorage.setItem("cartItems", JSON.stringify(data));
+
+  //   // console.log("Item added to cart:", item);
+  //   // const getCart = JSON.parse(localStorage.getItem("cartItems"));
+  //   // console.log("local stroage ka cart : " + getCart.p_id);
+  //   //-------------------------------------------
+  //   // try {s
+  //   //   let response = await axios.post(
+  //   //     "http://localhost:5000/api/cart/add-cart",
+  //   //     data
+  //   //   );
+  //   //   let result = response.data;
+  //   //   console.log(result, 66);
+
+  //   //   if (result) {
+  //   //     console.log(result, 68);
+  //   //   }
+  //   // } catch (error) {
+  //   //   console.log(error);
+  //   // }
+  //   //-----add to cart function-----
+  // };
 
   var div_style = {
     margin: "10px",

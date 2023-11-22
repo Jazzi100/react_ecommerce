@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
+import Swal from "sweetalert2";
 
 import LeftSideBar from "./LeftSideBar";
 
@@ -12,14 +13,11 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [productImage, setProductImage] = useState("");
-  const navigate = useNavigate();
-  console.log(productImage, 16);
 
   const onChangeImage = (e) => {
     setProductImage(e.target.files[0]);
   };
 
-  console.log(productImage, 22);
   // Get All categories APIs call
   const [categories, setCategories] = useState([]);
   useEffect(() => {
@@ -28,10 +26,9 @@ function AddProduct() {
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
-      url: "http://localhost:5000/category",
+      url: "http://localhost:5000/api/category/get-all-categories",
     })
       .then((response) => {
-        console.log(response.data);
         setCategories(response.data);
       })
       .catch((error) => {
@@ -60,13 +57,21 @@ function AddProduct() {
     data.append("quantity", quantity);
     data.append("productImage", productImage);
 
-    let result = await axios.post("http://localhost:5000/add-product", data);
-    result = await result.json();
-    console.log(result, 66);
+    let result = await axios.post(
+      "http://localhost:5000/api/product/add-product",
+      data
+    );
     if (result) {
-      console.log(result, 68);
-      localStorage.setItem("user", JSON.stringify(result));
-      navigate("/add-product");
+      Swal.fire({
+        icon: "success",
+        text: result.data.message,
+      });
+
+      setTitle("");
+      setDescription("");
+      setPrice("");
+      setQuantity("");
+      setProductImage("");
     }
   };
 
@@ -122,7 +127,7 @@ function AddProduct() {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="price">
+          <Form.Group as={Row} className="mb-3" controlId="category">
             <Form.Label column sm="2">
               Category
             </Form.Label>
@@ -130,13 +135,16 @@ function AddProduct() {
               <Form.Select
                 aria-label="Default select example"
                 onChange={(e) => setCategory(e.target.value)}
+                value={category._id}
               >
                 <option disabled selected>
                   --SELECT ANY ONE--
                 </option>
                 {categories.length &&
                   categories.map(({ _id, name }) => (
-                    <option value={name}>{name}</option>
+                    <option key={_id} value={_id}>
+                      {name}
+                    </option>
                   ))}
               </Form.Select>
             </Col>
@@ -156,7 +164,7 @@ function AddProduct() {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} className="mb-3" controlId="Quantity">
+          <Form.Group as={Row} className="mb-3" controlId="image">
             <Form.Label column sm="2">
               Images
             </Form.Label>

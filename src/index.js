@@ -1,15 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 //import App from './App';
-import reportWebVitals from './reportWebVitals';
-import MainTemplate from './MainTemplate';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import reportWebVitals from "./reportWebVitals";
+import MainTemplate from "./MainTemplate";
+import {CurrentUserState} from "./context/CurrentUserState";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "sweetalert2/dist/sweetalert2.min.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <MainTemplate />
+    <CurrentUserState>
+      <MainTemplate />
+    </CurrentUserState>
   </React.StrictMode>
 );
 

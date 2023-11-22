@@ -1,9 +1,14 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import login from "../images/pic2.jpg";
+import React, { useState, useContext } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import loginImg from "../images/pic2.jpg";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+import { CurrentUserContext } from "../context/CurrentUserState";
 
 const Login = () => {
+  const { login } = useContext(CurrentUserContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,22 +16,33 @@ const Login = () => {
 
   const collectData = async (e) => {
     e.preventDefault();
-    console.log(email, password);
-    let result = await fetch("http://localhost:5000/api/user/login", {
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    result = await result.json();
-    console.log("Line No 25 :", result.user.roleType);
-    if (result.user.roleType === 0) {
-      //localStorage.setItem("user", JSON.stringify(result));
-      navigate("/dashboard");
+
+    try {
+      let result = await fetch("http://localhost:5000/api/user/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      result = await result.json();
+      if (result.message) {
+        Swal.fire({
+          icon: "error",
+          title: "Login Error",
+          text: result.message,
+        });
+      }
+      login(result.user);
+      localStorage.setItem("current-user", JSON.stringify(result.user));
+      if (result.user.roleType === 0) {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -52,7 +68,7 @@ const Login = () => {
       <Row>
         <Col>
           <img
-            src={login}
+            src={loginImg}
             width="550px"
             height="600px"
             style={image_style}

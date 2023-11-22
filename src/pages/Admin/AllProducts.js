@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Table, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import axios from "axios";
 
@@ -96,21 +97,20 @@ function AllProducts() {
   };
 
   //Delete Product
-
   const deleteProduct = async (id) => {
-    console.log("ID = " + id);
-    let result = await fetch(`http://localhost:5000/delete/${id}`, {
+    let result = await fetch(`http://localhost:5000/api/product/delete/${id}`, {
       method: "DELETE",
-      body: JSON.stringify({
-        id,
-      }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     result = await result.json();
-    console.log(result);
+
     if (result) {
+      Swal.fire({
+        icon: "success",
+        text: result.message,
+      });
       axios({
         method: "get",
         headers: {
@@ -119,13 +119,11 @@ function AllProducts() {
         url: "http://localhost:5000/products",
       })
         .then((response) => {
-          console.log(response.data);
           setProducts(response.data);
         })
         .catch((error) => {
           console.log(error);
         });
-      navigate("/dashboard");
     }
   };
   return (
@@ -135,6 +133,11 @@ function AllProducts() {
       </Col>
       <Col sm={9}>
         <h3 className="p-3">All Products</h3>
+        <p align="right">
+          <Button variant="danger" href="/add-product" align="right">
+            Add Product
+          </Button>
+        </p>
         <Table>
           <thead>
             <tr>
@@ -169,11 +172,7 @@ function AllProducts() {
                     <td>{index + 1}</td>
                     <td>
                       <img
-                        //src={`.../public/uploads/${productImage}`}
-                        
-                        //src={image}
-                        //src={require(image)}
-                        //src={image}
+                        src={`http://localhost:5000/${productImage}`}
                         width={80}
                         height={80}
                         alt="..."
@@ -214,11 +213,6 @@ function AllProducts() {
             )}
           </tbody>
         </Table>
-        <p align="right">
-          <Button variant="danger" href="/add-product" align="right">
-            Add Product
-          </Button>
-        </p>
       </Col>
     </Row>
   );

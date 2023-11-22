@@ -14,6 +14,7 @@ import AllProducts from "./pages/Admin/AllProducts";
 import AddProduct from "./pages/Admin/AddProduct";
 import EditProduct from "./pages/Admin/EditProduct";
 import AllUsers from "./pages/Admin/AllUsers";
+import AddUser from "./pages/Admin/users/AddUser";
 
 function MainTemplate() {
   return (
@@ -33,6 +34,7 @@ function MainTemplate() {
           <Route path="/all-products" element={<AllProducts />} />
           <Route path="/admin-all-products" element={<AllProducts />} />
           <Route path="/all-users" element={<AllUsers />} />
+          <Route path="/admin-add-user" element={<AddUser />} />
         </Routes>
         <Footer />
       </Container>

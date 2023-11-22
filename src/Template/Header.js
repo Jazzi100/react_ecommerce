@@ -1,15 +1,13 @@
-import React from "react";
-import {
-  Container,
-  Navbar,
-  Nav,
-  NavDropdown,
-  Form,
-  Button,
-} from "react-bootstrap";
+import React, { useContext } from "react";
+import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import { CurrentUserContext } from "../context/CurrentUserState";
+
 function Header() {
+  const u = useContext(CurrentUserContext);
+  const userObject = localStorage.getItem("current-user");
+  const currentUser = JSON.parse(userObject);
   // const [show, setShow] = useState(false);
   // //const [flag, setFlag] = useState();
   // const [email, setEmail] = useState("");
@@ -57,9 +55,6 @@ function Header() {
               <Nav.Link as={Link} to="/signup">
                 SignUp
               </Nav.Link>
-              <Nav.Link as={Link} to="/login">
-                Login
-              </Nav.Link>
 
               <NavDropdown title="Link" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
@@ -72,7 +67,7 @@ function Header() {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form className="d-flex">
+            {/* <Form className="d-flex">
               <Form.Control
                 type="search"
                 placeholder="Search"
@@ -80,11 +75,31 @@ function Header() {
                 aria-label="Search"
               />
               <Button variant="outline-light">Search</Button>
-            </Form>
+            </Form> */}
             <Nav>
               <Nav.Link as={Link} to="/cart">
                 Cart <sup>{"3"}</sup>
               </Nav.Link>
+              {/* {`Welcome, ${u?.currentUser?.firstName}!`} */}
+              {u?.currentUser?.firstName ? (
+                <NavDropdown
+                  title={`Welcome, ${u?.currentUser?.firstName}!`}
+                  id="navbarScrollingDropdown"
+                >
+                  <NavDropdown.Item href="#action3">Profile</NavDropdown.Item>
+                  <NavDropdown.Item href="#action4">Account</NavDropdown.Item>
+                  <NavDropdown.Item href="#action4">Setting</NavDropdown.Item>
+                  <NavDropdown.Item href="#action4">My Orders</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item as={Link} to="/logout">
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
