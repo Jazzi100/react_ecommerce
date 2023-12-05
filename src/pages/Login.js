@@ -35,12 +35,15 @@ const Login = () => {
           title: "Login Error",
           text: result.message,
         });
+      }else{
+        login(result.user);
+        localStorage.setItem("current-user", JSON.stringify(result.user));
+        if (result.user.roleType === 1) {
+          navigate("/dashboard");
+        }
       }
-      login(result.user);
-      localStorage.setItem("current-user", JSON.stringify(result.user));
-      if (result.user.roleType === 0) {
-        navigate("/dashboard");
-      }
+      
+      
     } catch (error) {
       console.error("Error:", error);
     }

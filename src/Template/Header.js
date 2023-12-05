@@ -1,13 +1,39 @@
 import React, { useContext } from "react";
 import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { CurrentUserContext } from "../context/CurrentUserState";
 
 function Header() {
+  const navigate = useNavigate();
   const u = useContext(CurrentUserContext);
+  console.info("user context : " , u);
   const userObject = localStorage.getItem("current-user");
-  const currentUser = JSON.parse(userObject);
+  console.info('user object', userObject)
+  let currentUser = {};
+  if(userObject != undefined) {
+     currentUser = JSON.parse(userObject);
+  }
+
+  const handleLogout = async () => {
+    try {
+      const logout = localStorage.removeItem("current-user");
+      if(logout == undefined){
+        u.logout();
+        navigate("/login");
+      }
+      console.info('rrrrrrr', logout);
+      
+      
+      // Call the logout function, which should clear local storage or cookies
+      //await logout();
+
+      // Redirect to the login page
+      //history.push('/login');
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
+  };
   // const [show, setShow] = useState(false);
   // //const [flag, setFlag] = useState();
   // const [email, setEmail] = useState("");
@@ -80,7 +106,6 @@ function Header() {
               <Nav.Link as={Link} to="/cart">
                 Cart <sup>{"3"}</sup>
               </Nav.Link>
-              {/* {`Welcome, ${u?.currentUser?.firstName}!`} */}
               {u?.currentUser?.firstName ? (
                 <NavDropdown
                   title={`Welcome, ${u?.currentUser?.firstName}!`}
@@ -91,7 +116,7 @@ function Header() {
                   <NavDropdown.Item href="#action4">Setting</NavDropdown.Item>
                   <NavDropdown.Item href="#action4">My Orders</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item as={Link} to="/logout">
+                  <NavDropdown.Item  onClick={handleLogout}>
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
