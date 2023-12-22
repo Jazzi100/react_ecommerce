@@ -11,14 +11,14 @@ function Header() {
   const userObject = localStorage.getItem("current-user");
   console.info('user object', userObject)
   let currentUser = {};
-  if(userObject != undefined) {
+  if(userObject !== undefined) {
      currentUser = JSON.parse(userObject);
   }
 
   const handleLogout = async () => {
     try {
       const logout = localStorage.removeItem("current-user");
-      if(logout == undefined){
+      if(logout === undefined){
         u.logout();
         navigate("/login");
       }
@@ -81,6 +81,9 @@ function Header() {
               <Nav.Link as={Link} to="/signup">
                 SignUp
               </Nav.Link>
+              <Nav.Link as={Link} to="/side-menu">
+                Side Menu
+              </Nav.Link>
 
               <NavDropdown title="Link" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
@@ -115,6 +118,7 @@ function Header() {
                   <NavDropdown.Item href="#action4">Account</NavDropdown.Item>
                   <NavDropdown.Item href="#action4">Setting</NavDropdown.Item>
                   <NavDropdown.Item href="#action4">My Orders</NavDropdown.Item>
+                  <NavDropdown.Item href="/dashboard">Dashboard</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item  onClick={handleLogout}>
                     Logout

@@ -47,6 +47,11 @@ const Login = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+
+    // setTimeout(() => {
+    //   //localStorage.removeItem("current-user");
+    //   alert("OK");
+    // }, 1 * 60 * 1000);
   };
 
   var div_style = {

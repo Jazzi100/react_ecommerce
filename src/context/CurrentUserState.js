@@ -10,6 +10,11 @@ const CurrentUserState = (props) => {
     if (user) setCurrentUser(user);
   }, []);
 
+  // setTimeout(() => {
+  //   localStorage.removeItem("current-user");
+  //   alert("OK");
+  // }, 5 * 60 * 1000);
+
   const login = (userData) => {
     setCurrentUser(userData);
   };
