@@ -7,9 +7,9 @@ import { CurrentUserContext } from "../context/CurrentUserState";
 function Header() {
   const navigate = useNavigate();
   const u = useContext(CurrentUserContext);
-  console.info("user context : " , u);
+
   const userObject = localStorage.getItem("current-user");
-  console.info('user object', userObject)
+
   let currentUser = {};
   if(userObject !== undefined) {
      currentUser = JSON.parse(userObject);

@@ -14,7 +14,7 @@ function AddProduct() {
   const [quantity, setQuantity] = useState("");
   const [productImage, setProductImage] = useState("");
 
-  console.log("Category Name : " , category);
+  
 
   const onChangeImage = (e) => {
     setProductImage(e.target.files[0]);
@@ -157,7 +157,7 @@ function AddProduct() {
               <Form.Select
                 aria-label="Default select example"
                 onChange={(e) => setCategory(e.target.value)}
-                value={category._id}
+                value={category}
               >
                 <option disabled value="">
                   --SELECT ANY ONE--

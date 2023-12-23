@@ -45,7 +45,7 @@ function EditProduct() {
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
-      url: "http://localhost:5000/category",
+      url: "http://localhost:5000/api/category/get-all-categories",
     })
       .then((response) => {
         console.log(response.data);
@@ -157,8 +157,8 @@ function EditProduct() {
                   --SELECT ANY ONE--
                 </option>
                 {categories.length &&
-                  categories.map(({ _id, name, status }) => (
-                    <option value={_id} selected>
+                  categories.map(({ _id, name }) => (
+                    <option key={_id} value={_id} selected={_id === category}>
                       {name}
                     </option>
                   ))}
