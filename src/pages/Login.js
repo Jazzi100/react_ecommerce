@@ -4,6 +4,7 @@ import loginImg from "../images/pic2.jpg";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
+
 import { CurrentUserContext } from "../context/CurrentUserState";
 
 const Login = () => {
@@ -28,7 +29,9 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       });
+      
       result = await result.json();
+     
       if (result.message) {
         Swal.fire({
           icon: "error",
@@ -36,11 +39,21 @@ const Login = () => {
           text: result.message,
         });
       }else{
-        login(result.user);
-        localStorage.setItem("current-user", JSON.stringify(result.user));
-        if (result.user.roleType === 1) {
+        login(result.data);
+        localStorage.setItem("current-user", JSON.stringify(result));
+        if (result.data.user.roleType === 1) {
           navigate("/dashboard");
         }
+        
+        setTimeout(() => {
+          // Remove the local storage data
+          localStorage.removeItem("current-user");
+        
+          // Redirect to the login page (adjust the path as needed)
+         
+          navigate("/login");
+        }, 2 * 60 * 1000); // 5 minutes in milliseconds
+        
       }
       
       

@@ -13,6 +13,7 @@ function Header() {
   let currentUser = {};
   if(userObject !== undefined) {
      currentUser = JSON.parse(userObject);
+     
   }
 
   const handleLogout = async () => {
@@ -22,7 +23,7 @@ function Header() {
         u.logout();
         navigate("/login");
       }
-      console.info('rrrrrrr', logout);
+      
       
       
       // Call the logout function, which should clear local storage or cookies
@@ -109,9 +110,9 @@ function Header() {
               <Nav.Link as={Link} to="/cart">
                 Cart <sup>{"3"}</sup>
               </Nav.Link>
-              {u?.currentUser?.firstName ? (
+              {u?.currentUser?.user?.firstName ? (
                 <NavDropdown
-                  title={`Welcome, ${u?.currentUser?.firstName}!`}
+                  title={`Welcome, ${u?.currentUser?.user?.firstName}!`}
                   id="navbarScrollingDropdown"
                 >
                   <NavDropdown.Item href="#action3">Profile</NavDropdown.Item>
