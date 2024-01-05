@@ -36,11 +36,24 @@ const Products = () => {
   //   }
   // }, []);
 
-  const addToCart = (item) => {
-    let data = {
+  
+
+  const addToCart = async (item) => {
+    
+    let cart = {
       p_id: item._id,
       qty: qty,
     };
+    console.log("Add to Cart : ", cart);
+
+    try {
+      const result = await axios.post('http://localhost:5000/api/cart/add-cart', cart);
+      console.log("cart added : ",result);
+    
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
   //   console.log("add to cart line no 44 : " + item._id);
   //   const storedCartItems = localStorage.getItem("cartItems");

@@ -18,6 +18,7 @@ import EditProduct from "./pages/Admin/EditProduct";
 import AllUsers from "./pages/Admin/AllUsers";
 import AddUser from "./pages/Admin/users/AddUser";
 import AdminCategory from "./pages/Admin/categories/AdminCategory";
+import MyCart from "./pages/MyCart/MyCart";
 
 
 function MainTemplate() {
@@ -27,6 +28,7 @@ function MainTemplate() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/my-cart" element={<MyCart/>}/>
           <Route path="/side-menu" element={<SideMenu />} />
           <Route path="/products" element={<Products />} />
           <Route path="/about" element={<About />} />

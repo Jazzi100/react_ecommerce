@@ -85,6 +85,9 @@ function Header() {
               <Nav.Link as={Link} to="/side-menu">
                 Side Menu
               </Nav.Link>
+              <Nav.Link as={Link} to="/my-cart">
+                MyCart
+              </Nav.Link>
 
               <NavDropdown title="Link" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
