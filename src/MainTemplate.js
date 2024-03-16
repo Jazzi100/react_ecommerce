@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Header from "./Template/Header";
 import Footer from "./Template/Footer";
-import SideMenu from "./Template/SideMenu";
+import SideMenu from "./Template/side menu/SideMenu";
 
 import Products from "./pages/Products";
 import About from "./pages/About";
@@ -19,6 +19,8 @@ import AllUsers from "./pages/Admin/AllUsers";
 import AddUser from "./pages/Admin/users/AddUser";
 import AdminCategory from "./pages/Admin/categories/AdminCategory";
 import MyCart from "./pages/MyCart/MyCart";
+import ProductDetail from "./pages/ProductDetail";
+
 
 
 function MainTemplate() {
@@ -43,6 +45,7 @@ function MainTemplate() {
           <Route path="/all-users" element={<AllUsers />} />
           <Route path="/admin-add-user" element={<AddUser />} />
           <Route path="/admin-all-category" element={<AdminCategory />} />
+          <Route path="/product-detail/:id" element={<ProductDetail />} />
         </Routes>
         <Footer />
       </Container>
