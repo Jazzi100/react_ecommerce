@@ -161,7 +161,7 @@ function AllProducts() {
                     title,
                     description,
                     price,
-                    category,
+                    catagory_id,
                     quantity,
                     productImage,
                     status,
@@ -181,7 +181,7 @@ function AllProducts() {
                     <td>{title}</td>
                     <td>{description}</td>
                     <td>{price}</td>
-                    <td>{category}</td>
+                    <td>{catagory_id?.name}</td>
                     <td>{quantity}</td>
                     <td>
                       <Form.Check

@@ -12,7 +12,7 @@ function Footer(){
     }
     return(
         <div>
-            <p className="text-center p-2" style={footer}>© 2022 E-Commerce</p>
+            <p className="text-center p-2" style={footer}>© 2024 E-Commerce</p>
         </div>
     );
 }

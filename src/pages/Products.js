@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Col, Row, Card, Container, Form, Button } from "react-bootstrap";
+import {  useNavigate   } from 'react-router-dom';
 
 import Categories from "./Categories";
 import "./productPageStyleSheet.css";
@@ -9,6 +10,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [qty, setQty] = useState("");
   const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     axios({
       method: "get",
@@ -36,12 +38,32 @@ const Products = () => {
   //   }
   // }, []);
 
-  const addToCart = (item) => {
-    let data = {
+  
+
+  const addToCart = async (item) => {
+    
+    let cart = {
       p_id: item._id,
       qty: qty,
     };
+    console.log("Add to Cart : ", cart);
+
+    try {
+      const result = await axios.post('http://localhost:5000/api/cart/add-cart', cart);
+      console.log("cart added : ",result);
+    
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
+  const detailPage = (id) =>{
+      //alert("working" + id);
+      navigate(`/product-detail/${id}`);
+  }
+
+
   //   console.log("add to cart line no 44 : " + item._id);
   //   const storedCartItems = localStorage.getItem("cartItems");
   //   console.log("storedCartItems : " + storedCartItems);
@@ -146,7 +168,8 @@ const Products = () => {
                   }) => (
                     <Col sm={3}>
                       <div style={div_style}>
-                        <Card className="Red">
+                      {/* <Link to={`/product/product-detail/${_id}`}> */}
+                        <Card className="Red" onClick={()=>{detailPage(_id)}}>
                           <Card.Img
                             variant="top"
                             height="150px"
@@ -188,6 +211,7 @@ const Products = () => {
                             </Form>
                           </Card.Body>
                         </Card>
+                        {/* </Link> */}
                       </div>
                     </Col>
                   )

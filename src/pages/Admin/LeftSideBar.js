@@ -22,7 +22,22 @@ function LeftSideBar() {
               <p>Delete Products</p>
             </Accordion.Body>
           </Accordion.Item>
+
           <Accordion.Item eventKey="1">
+            <Accordion.Header>Categories</Accordion.Header>
+            <Accordion.Body>
+              <p>
+                <a href="/admin-all-category">All Categories</a>
+              </p>
+              <p>
+                <a href="/add-category">Add Category</a>
+              </p>
+
+              <p>Delete Products</p>
+            </Accordion.Body>
+          </Accordion.Item>
+
+          <Accordion.Item eventKey="2">
             <Accordion.Header>Orders</Accordion.Header>
             <Accordion.Body>
               <p>All Orders</p>
@@ -30,7 +45,7 @@ function LeftSideBar() {
               <p>Delete Orders</p>
             </Accordion.Body>
           </Accordion.Item>
-          <Accordion.Item eventKey="2">
+          <Accordion.Item eventKey="3">
             <Accordion.Header>Users</Accordion.Header>
             <Accordion.Body>
               <p>
@@ -42,7 +57,7 @@ function LeftSideBar() {
               <p>Edit User</p>
             </Accordion.Body>
           </Accordion.Item>
-          <Accordion.Item eventKey="3">
+          <Accordion.Item eventKey="4">
             <Accordion.Header>Comments</Accordion.Header>
             <Accordion.Body>
               <p>All Comments</p>

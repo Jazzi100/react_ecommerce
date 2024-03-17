@@ -14,6 +14,8 @@ function AddProduct() {
   const [quantity, setQuantity] = useState("");
   const [productImage, setProductImage] = useState("");
 
+  
+
   const onChangeImage = (e) => {
     setProductImage(e.target.files[0]);
   };
@@ -39,14 +41,14 @@ function AddProduct() {
   // ADD PRODUCT API
   const collectData = async (e) => {
     e.preventDefault();
-    console.log(
+    console.log("input Fields : ",
       title,
       description,
       price,
       category,
       quantity,
       productImage,
-      40
+      
     );
 
     const data = new FormData();
@@ -62,16 +64,18 @@ function AddProduct() {
       data
     );
     if (result) {
+      console.log("Product Result : ", result);
       Swal.fire({
         icon: "success",
         text: result.data.message,
       });
 
-      setTitle("");
-      setDescription("");
-      setPrice("");
-      setQuantity("");
-      setProductImage("");
+      // setTitle("");
+      // setDescription("");
+      // setPrice("");
+      // setQuantity("");
+      // setCategory("");
+      // setProductImage("");
     }
   };
 
@@ -81,7 +85,7 @@ function AddProduct() {
         <LeftSideBar />
       </Col>
       <Col sm={9}>
-        <h3 className="p-3">Add New Product</h3>
+        <h4 className="p-3">Add New Product</h4>
         <Form className="p-3" encType="multipart/form-data">
           <Form.Group as={Row} className="mb-3" controlId="title">
             <Form.Label column sm="2">
@@ -131,16 +135,34 @@ function AddProduct() {
             <Form.Label column sm="2">
               Category
             </Form.Label>
-            <Col sm="8">
+            {/* <Col sm="8">
               <Form.Select
                 aria-label="Default select example"
                 onChange={(e) => setCategory(e.target.value)}
-                value={category._id}
+                value={category.name}
               >
                 <option disabled selected>
                   --SELECT ANY ONE--
                 </option>
                 {categories.length &&
+                  categories.map(({name}) => (
+                    <option key={name} value={name}>
+                      {name}
+                    </option>
+                  ))}
+              </Form.Select>
+            </Col> */}
+
+            <Col sm="8">
+              <Form.Select
+                aria-label="Default select example"
+                onChange={(e) => setCategory(e.target.value)}
+                value={category}
+              >
+                <option disabled value="">
+                  --SELECT ANY ONE--
+                </option>
+                {categories.length > 0 &&
                   categories.map(({ _id, name }) => (
                     <option key={_id} value={_id}>
                       {name}
@@ -148,6 +170,7 @@ function AddProduct() {
                   ))}
               </Form.Select>
             </Col>
+
           </Form.Group>
 
           <Form.Group as={Row} className="mb-3" controlId="Quantity">

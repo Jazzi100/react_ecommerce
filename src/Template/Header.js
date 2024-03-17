@@ -7,22 +7,23 @@ import { CurrentUserContext } from "../context/CurrentUserState";
 function Header() {
   const navigate = useNavigate();
   const u = useContext(CurrentUserContext);
-  console.info("user context : " , u);
+
   const userObject = localStorage.getItem("current-user");
-  console.info('user object', userObject)
+
   let currentUser = {};
-  if(userObject != undefined) {
+  if(userObject !== undefined) {
      currentUser = JSON.parse(userObject);
+     
   }
 
   const handleLogout = async () => {
     try {
       const logout = localStorage.removeItem("current-user");
-      if(logout == undefined){
+      if(logout === undefined){
         u.logout();
         navigate("/login");
       }
-      console.info('rrrrrrr', logout);
+      
       
       
       // Call the logout function, which should clear local storage or cookies
@@ -81,6 +82,12 @@ function Header() {
               <Nav.Link as={Link} to="/signup">
                 SignUp
               </Nav.Link>
+              <Nav.Link as={Link} to="/side-menu">
+                Side Menu
+              </Nav.Link>
+              <Nav.Link as={Link} to="/my-cart">
+                MyCart
+              </Nav.Link>
 
               <NavDropdown title="Link" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
@@ -106,15 +113,16 @@ function Header() {
               <Nav.Link as={Link} to="/cart">
                 Cart <sup>{"3"}</sup>
               </Nav.Link>
-              {u?.currentUser?.firstName ? (
+              {u?.currentUser?.user?.firstName ? (
                 <NavDropdown
-                  title={`Welcome, ${u?.currentUser?.firstName}!`}
+                  title={`Welcome, ${u?.currentUser?.user?.firstName}!`}
                   id="navbarScrollingDropdown"
                 >
                   <NavDropdown.Item href="#action3">Profile</NavDropdown.Item>
                   <NavDropdown.Item href="#action4">Account</NavDropdown.Item>
                   <NavDropdown.Item href="#action4">Setting</NavDropdown.Item>
                   <NavDropdown.Item href="#action4">My Orders</NavDropdown.Item>
+                  <NavDropdown.Item href="/dashboard">Dashboard</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item  onClick={handleLogout}>
                     Logout

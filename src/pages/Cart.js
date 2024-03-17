@@ -3,17 +3,16 @@ import React, { useState, useEffect } from "react";
 import {
   Row,
   Col,
-  Table,
   Container,
   Button,
-  Card,
-  ListGroup,
+  
 } from "react-bootstrap";
 import axios from "axios";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 const Cart = () => {
   const [carts, setCarts] = useState([]);
+
   useEffect(() => {
     axios({
       method: "get",
@@ -31,6 +30,10 @@ const Cart = () => {
       });
   }, []);
 
+  const removeCart = () => {
+    console.log("remove cart button");
+    
+  };
   const cartdiv = {
     padding: "30px",
     fontFamily: "Arial",
@@ -98,10 +101,10 @@ const Cart = () => {
                       color: "black",
                       textDecoration: "none",
                     }}
-                    href="https://www.example.com"
+                    
                   >
                     <RiDeleteBin6Line />
-                    Remove
+                    <span onClick={removeCart()}>Remove</span>
                   </a>
                 </Col>
                 <Col sm={2}>
