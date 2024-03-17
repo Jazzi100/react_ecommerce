@@ -115,7 +115,7 @@ const Login = () => {
               </Button>
             </Form>
             <p className="mt-3" style={click_here}>
-              Already have an account <a href="/login">click here</a>
+              Don't have an account? <a href="/signup">click here</a>
             </p>
           </div>
         </Col>
