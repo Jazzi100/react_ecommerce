@@ -9,7 +9,7 @@ import "./productPageStyleSheet.css";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [qty, setQty] = useState("");
-  const [cart, setCart] = useState([]);
+  // const [cart, setCart] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     axios({
@@ -155,29 +155,32 @@ const Products = () => {
             <Categories />
           </Col>
           <Col sm={10}>
+           
             <Row>
               {products.length > 0 ? (
                 products.map(
                   ({
-                    _id,
-                    title,
-                    description,
-                    price,
-                    category,
-                    productImage,
+                    _id, 
+                    title, 
+                    description, 
+                    price, 
+                    catagory_id, 
+                    productImage
                   }) => (
                     <Col sm={3}>
                       <div style={div_style}>
                       {/* <Link to={`/product/product-detail/${_id}`}> */}
-                        <Card className="Red" onClick={()=>{detailPage(_id)}}>
+                        <Card className="Red" >
                           <Card.Img
                             variant="top"
                             height="150px"
                             src={`http://localhost:5000/${productImage}`}
+                            onClick={()=>{detailPage(_id)}}
                           />
                           <Card.Body>
                             <Card.Title>AED {price}</Card.Title>
                             <Card.Text>{title}</Card.Text>
+                            <Card.Text>{catagory_id.name}</Card.Text>
                             <Form>
                               <Form.Group className="mb-2">
                                 <Form.Control
@@ -200,7 +203,7 @@ const Products = () => {
                                     title,
                                     description,
                                     price,
-                                    category,
+                                    catagory_id,
                                     productImage,
                                   })
                                 }
