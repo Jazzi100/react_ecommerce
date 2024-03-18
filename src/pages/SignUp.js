@@ -14,7 +14,7 @@ function SignUp() {
   const collectData = async (e) => {
     e.preventDefault();
     console.log(firstName, lastName, email, password, profilePicture);
-    let result = await fetch("http://localhost:5000/signup", {
+    let result = await fetch("http://localhost:5000/api/user/signup", {
       method: "POST",
       body: JSON.stringify({
         firstName,
