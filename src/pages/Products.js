@@ -61,85 +61,11 @@ const Products = () => {
   const detailPage = (id) =>{
       //alert("working" + id);
       navigate(`/product-detail/${id}`);
+      
   }
 
 
-  //   console.log("add to cart line no 44 : " + item._id);
-  //   const storedCartItems = localStorage.getItem("cartItems");
-  //   console.log("storedCartItems : " + storedCartItems);
-  //   if (!storedCartItems) {
-  //     localStorage.setItem("cartItems", JSON.stringify(data));
-  //   } else {
-  //     const storedCartItems = localStorage.getItem("cartItems");
-  //     console.log("storedCartItems line no 51 : " + storedCartItems);
-
-  //     console.log("stored Cart Items ID : " + storedCartItems.p_id);
-  //     console.log("Item ID : " + item._id);
-  //     if (storedCartItems.p_id === item._id) {
-  //       console.log("if condition m agya line no 48");
-  //       updateCartItem(item);
-  //     } else {
-  //       setCartItems([...cartItems, data]);
-  //       // Save the updated cart items to local storage
-  //       localStorage.setItem("cartItems", JSON.stringify([...cartItems, data]));
-  //     }
-  //   }
-
-  //   const updateCartItem = (item) => {
-  //     const elementIndex = data.findIndex((c) => c.p_id === item.p_id);
-  //     if (elementIndex > -1) {
-  //       data[elementIndex] = item;
-  //       //storeCartInLocalStorage();
-  //     }
-  //   };
-  //   // setCartItems([...cartItems, data]);
-  //   // // Save the updated cart items to local storage
-  //   // localStorage.setItem("cartItems", JSON.stringify([...cartItems, data]));
-  // };
-
-  //--------------------------------
-  // const addToCart = async (item) => {
-  //   let data = {
-  //     p_id: item._id,
-  //     qty: qty,
-  //   };
-
-  //   //-------------------------------------------
-  //   // const existingCartItems =
-  //   //   JSON.parse(localStorage.getItem("cartItems")) || [];
-
-  //   // //const updatedCartItems = [...existingCartItems, data];
-
-  //   // const updateCartItem = (item) => {
-  //   //   const elementIndex = data.findIndex((c) => c.p_id === item.p_id);
-  //   //   if (elementIndex > -1) {
-  //   //     data[elementIndex] = item;
-  //   //     //storeCartInLocalStorage();
-  //   //   }
-  //   // };
-
-  //   // localStorage.setItem("cartItems", JSON.stringify(data));
-
-  //   // console.log("Item added to cart:", item);
-  //   // const getCart = JSON.parse(localStorage.getItem("cartItems"));
-  //   // console.log("local stroage ka cart : " + getCart.p_id);
-  //   //-------------------------------------------
-  //   // try {s
-  //   //   let response = await axios.post(
-  //   //     "http://localhost:5000/api/cart/add-cart",
-  //   //     data
-  //   //   );
-  //   //   let result = response.data;
-  //   //   console.log(result, 66);
-
-  //   //   if (result) {
-  //   //     console.log(result, 68);
-  //   //   }
-  //   // } catch (error) {
-  //   //   console.log(error);
-  //   // }
-  //   //-----add to cart function-----
-  // };
+  
 
   var div_style = {
     margin: "10px",
@@ -169,52 +95,52 @@ const Products = () => {
                   }) => (
                     <Col sm={3}>
                       <div style={div_style}>
-                      {/* <Link to={`/product/product-detail/${_id}`}> */}
-                        <Card className="Red" >
-                          <Card.Img
-                            variant="top"
-                            height="150px"
-                            src={`http://localhost:5000/${productImage}`}
-                            onClick={()=>{detailPage(_id)}}
-                          />
-                          <Card.Body>
-                            <Card.Title>AED {price}</Card.Title>
-                            <Card.Text>{title}</Card.Text>
-                            <Card.Text>{catagory_id.name}</Card.Text>
-                            <Form>
-                              <Form.Group className="mb-2">
-                                <Form.Control
-                                  type="number"
-                                  min="1"
-                                  size="sm"
-                                  onChange={(e) => setQty(e.target.value)}
-                                />
-                              </Form.Group>
+                      <Card className="Red" onClick={(e) => {detailPage(_id)}}>
+  <div>
+    <Card.Img
+      variant="top"
+      height="150px"
+      src={`http://localhost:5000/${productImage}`}
+    />
+    <Card.Body>
+      <Card.Title>AED {price}</Card.Title>
+      <Card.Text>{title}</Card.Text>
+      <Card.Text>{catagory_id.name}</Card.Text>
+      <Form>
+        <Form.Group className="mb-2">
+          <Form.Control
+            type="number"
+            min="1"
+            size="sm"
+            onChange={(e) => setQty(e.target.value)}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </Form.Group>
+        <Button
+          className="mb-1 w-100"
+          size="sm"
+          variant="outline-danger"
+          id={_id}
+          onClick={(e) => {
+            e.stopPropagation(); // Stop event propagation
+            addToCart({
+              _id,
+              title,
+              description,
+              price,
+              catagory_id,
+              productImage,
+            });
+          }}
+        >
+          Add To Cart
+        </Button>
+      </Form>
+    </Card.Body>
+  </div>
+</Card>
 
-                              {/* <Nav.Link as={Link} to="/cart"> */}
-                              <Button
-                                className="mb-1 w-100"
-                                size="sm"
-                                variant="outline-danger"
-                                id={_id}
-                                onClick={() =>
-                                  addToCart({
-                                    _id,
-                                    title,
-                                    description,
-                                    price,
-                                    catagory_id,
-                                    productImage,
-                                  })
-                                }
-                              >
-                                Add To Cart
-                              </Button>
-                              {/* </Nav.Link> */}
-                            </Form>
-                          </Card.Body>
-                        </Card>
-                        {/* </Link> */}
+
                       </div>
                     </Col>
                   )
