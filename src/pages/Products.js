@@ -3,12 +3,16 @@ import axios from "axios";
 import { Col, Row, Card, Container, Form, Button } from "react-bootstrap";
 import {  useNavigate   } from 'react-router-dom';
 
-import Categories from "./Categories";
+import CategoryList from "../Components/CategoryList";
 import "./productPageStyleSheet.css";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [qty, setQty] = useState("");
+
+  const [filteredProducts, setFilteredProducts] = useState([]); // State to hold filtered products
+  const [selectedCategory, setSelectedCategory] = useState(""); // State to hold selected
+  
   // const [cart, setCart] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,6 +22,7 @@ const Products = () => {
         "Access-Control-Allow-Origin": "*",
       },
       url: "http://localhost:5000/api/product/get-active-products",
+      //url:  `http://localhost:5000/api/product/get-active-products?categoryId=${selectedCategory}` 
     })
       .then((response) => {
         console.log(response.data);
@@ -28,6 +33,43 @@ const Products = () => {
       });
   }, []);
 
+
+  // Function to filter products based on selected category
+  // useEffect(() => {
+  //   if (selectedCategory === "") {
+  //     setFilteredProducts(products); // If no category is selected, show all products
+  //   } else {
+  //     const filtered = products.filter(product => product.category_id === selectedCategory);
+  //     setFilteredProducts(filtered);
+  //   }
+  // }, [selectedCategory, products]);
+
+  const handleSelectCategory = (categoryId) => {
+    setSelectedCategory(categoryId);
+    console.log("set Selected Category : " + selectedCategory);
+
+    
+  };
+
+
+  
+  useEffect(() => {
+    axios({
+      method: "get",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      //url: "http://localhost:5000/api/product/get-active-products",
+      url:  `http://localhost:5000/api/product/get-active-products?categoryId=${selectedCategory}` 
+    })
+      .then((response) => {
+        console.log(response.data);
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   //-----add to cart function-----
 
   // useEffect(() => {
@@ -61,7 +103,14 @@ const Products = () => {
   const detailPage = (id) =>{
       //alert("working" + id);
       navigate(`/product-detail/${id}`);
+      try {
+        const result = axios.get('http://localhost:5000/api/',id);
+        console.log("single product : ",result);
       
+        
+      } catch (error) {
+        console.error("Error:", error);
+      }
   }
 
 
@@ -78,7 +127,7 @@ const Products = () => {
         </Row>
         <Row>
           <Col sm={2}>
-            <Categories />
+            <CategoryList onSelectCategory={handleSelectCategory} />
           </Col>
           <Col sm={10}>
            

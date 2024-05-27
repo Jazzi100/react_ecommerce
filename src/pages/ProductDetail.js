@@ -29,6 +29,24 @@ function ProductDetail (){
           });
       }, []);
 
+      const addToCart = async (item) => {
+    
+        let cart = {
+          p_id: item._id,
+         // qty: qty,
+        };
+        console.log("Add to Cart : ", cart);
+    
+        try {
+          const result = await axios.post('http://localhost:5000/api/cart/add-cart', cart);
+          console.log("cart added : ",result);
+        
+          
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+
       const divStyle = {
         padding: '10px',
         borderRadius: '5px',
@@ -75,21 +93,19 @@ function ProductDetail (){
 						</div>
 						<h4 class="price">current price: <span>AED {product.price}</span></h4>
             <p class="product-description">{product.description}</p>
-						
-						{/* <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-						<h5 class="sizes">sizes:
-							<span class="size" data-toggle="tooltip" title="small">s</span>
-							<span class="size" data-toggle="tooltip" title="medium">m</span>
-							<span class="size" data-toggle="tooltip" title="large">l</span>
-							<span class="size" data-toggle="tooltip" title="xtra large">xl</span>
-						</h5>
-						<h5 class="colors">colors:
-							<span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
-							<span class="color green"></span>
-							<span class="color blue"></span>
-						</h5> */}
+					
 						<div class="action">
-            <Button variant="danger" className="w-100 addToCart" size="lg">
+            <Button variant="danger" className="w-100 addToCart" size="lg" onClick={(e) => {
+            e.stopPropagation(); // Stop event propagation
+            // addToCart({
+            //   _id,
+            //   title,
+            //   description,
+            //   price,
+            //   catagory_id,
+            //   productImage,
+            // });
+          }}>
             ADD TO CART
           </Button>
 							

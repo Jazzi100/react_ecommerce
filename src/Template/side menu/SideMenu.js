@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import './sideMenuStyle.css';
 import './sideMenuScript.js';
+import CategoryList from "../../Components/CategoryList.js";
 
 function SideMenu() {
   const [isBtnClicked, setBtnClicked] = useState(false);
@@ -33,7 +34,7 @@ function SideMenu() {
 
   return (
     <>
-      <div className={`btn ${isBtnClicked ? 'click' : ''}`} onClick={handleBtnClick}>
+      {/* <div className={`btn ${isBtnClicked ? 'click' : ''}`} onClick={handleBtnClick}>
         <span className="fas fa-bars"></span>
       </div>
       <nav className="sidebar">
@@ -75,7 +76,8 @@ function SideMenu() {
         <p>
           HTML CSS & Javascript (Full Tutorial)
         </p>
-      </div>
+      </div> */}
+      <CategoryList />
     </>
   );
 }
