@@ -13,7 +13,7 @@ function Header() {
   let currentUser = {};
   if(userObject !== undefined) {
      currentUser = JSON.parse(userObject);
-     
+     console.log("Current User : ", u);
   }
 
   const handleLogout = async () => {

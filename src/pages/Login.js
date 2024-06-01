@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { CurrentUserContext } from "../context/CurrentUserState";
 
 const Login = () => {
-  const { login } = useContext(CurrentUserContext);
+  const { login, logout } = useContext(CurrentUserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,12 +48,12 @@ const Login = () => {
         setTimeout(() => {
           // Remove the local storage data
           localStorage.removeItem("current-user");
-        
+          logout();
           // Redirect to the login page (adjust the path as needed)
          
           navigate("/login");
-        }, 2 * 60 * 1000); // 5 minutes in milliseconds
-        
+        //}, 5 * 60 * 1000); // 5 minutes in milliseconds
+        }, 30 * 1000);
       }
       
       

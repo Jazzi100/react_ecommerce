@@ -10,19 +10,22 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [qty, setQty] = useState("");
 
-  const [filteredProducts, setFilteredProducts] = useState([]); // State to hold filtered products
-  const [selectedCategory, setSelectedCategory] = useState(""); // State to hold selected
+  const [selectedCategory, setSelectedCategory] = useState("All"); // State to hold selected
   
   // const [cart, setCart] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    getAllProducts()
+  }, []);
+
+  const getAllProducts = () => {
     axios({
       method: "get",
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
-      url: "http://localhost:5000/api/product/get-active-products",
-      //url:  `http://localhost:5000/api/product/get-active-products?categoryId=${selectedCategory}` 
+      //url: "http://localhost:5000/api/product/get-active-products",
+      url:  `http://localhost:5000/api/product/get-active-products?categoryId=${selectedCategory}` 
     })
       .then((response) => {
         console.log(response.data);
@@ -31,9 +34,7 @@ const Products = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-
-
+  }
   // Function to filter products based on selected category
   // useEffect(() => {
   //   if (selectedCategory === "") {
@@ -51,25 +52,28 @@ const Products = () => {
     
   };
 
-
-  
   useEffect(() => {
-    axios({
-      method: "get",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      //url: "http://localhost:5000/api/product/get-active-products",
-      url:  `http://localhost:5000/api/product/get-active-products?categoryId=${selectedCategory}` 
-    })
-      .then((response) => {
-        console.log(response.data);
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    getAllProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategory])
+  
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     headers: {
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     //url: "http://localhost:5000/api/product/get-active-products",
+  //     url:  `http://localhost:5000/api/product/get-active-products?categoryId=${selectedCategory}` 
+  //   })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setProducts(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
   //-----add to cart function-----
 
   // useEffect(() => {
