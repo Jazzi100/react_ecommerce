@@ -20,6 +20,7 @@ import AddUser from "./pages/Admin/users/AddUser";
 import AdminCategory from "./pages/Admin/categories/AdminCategory";
 import MyCart from "./pages/MyCart/MyCart";
 import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
 
 
 
@@ -46,6 +47,7 @@ function MainTemplate() {
           <Route path="/admin-add-user" element={<AddUser />} />
           <Route path="/admin-all-category" element={<AdminCategory />} />
           <Route path="/product-detail/:id" element={<ProductDetail />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
         <Footer />
       </Container>

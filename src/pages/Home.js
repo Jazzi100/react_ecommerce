@@ -1,18 +1,30 @@
 import React, { useContext } from "react";
-import { Row } from "react-bootstrap";
+import { Row, Carousel, Container, Image } from "react-bootstrap";
 import { CurrentUserContext } from "../context/CurrentUserState";
 
-function Home() {
-  const a = useContext(CurrentUserContext);
-  return (
-    <Row>
-      <h1>Home Page</h1>
+import slider1 from "../images/slider1.jpg";
+import slider2 from "../images/slider2.jpg";
+import slider3 from "../images/slider3.jpg";
 
-      <h3>
-        <p>
-          My name is {a?.currentUser?.firstName} i am from {a.country}
-        </p>
-      </h3>
+function Home() {
+  //const a = useContext(CurrentUserContext);
+  return (
+    <Row> 
+      <Container width="80%">
+      <Carousel>
+        <Carousel.Item interval={1000}>
+          <Image src={slider2} width="100%" height="300px"/>
+        </Carousel.Item>
+        
+        <Carousel.Item interval={500}>
+          <Image src={slider1} width="100%" height="300px"/>
+        </Carousel.Item>
+        
+        <Carousel.Item>
+          <Image src={slider3} width="100%" height="300px"/>
+        </Carousel.Item>
+      </Carousel>
+      </Container> 
     </Row>
   );
 }
