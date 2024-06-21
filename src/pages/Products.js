@@ -3,21 +3,49 @@ import axios from "axios";
 import { Col, Row, Card, Container, Form, Button } from "react-bootstrap";
 import {  useNavigate   } from 'react-router-dom';
 
-import Categories from "./Categories";
+import Categories from "../Components/Categories";
 import "./productPageStyleSheet.css";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [qty, setQty] = useState("");
   // const [cart, setCart] = useState([]);
   const navigate = useNavigate();
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     headers: {
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     url: "http://localhost:5000/api/product/get-active-products",
+  //   })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setProducts(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
+
   useEffect(() => {
+    fetchProducts(selectedCategory);
+  }, [selectedCategory]);
+
+  const fetchProducts = (categoryId) => {
+    let url = "http://localhost:5000/api/product/get-active-products";
+    if (categoryId) {
+      url += `?categoryId=${categoryId}`;
+    }
+
     axios({
       method: "get",
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
-      url: "http://localhost:5000/api/product/get-active-products",
+      url: url,
     })
       .then((response) => {
         console.log(response.data);
@@ -26,19 +54,7 @@ const Products = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
-
-  //-----add to cart function-----
-
-  // useEffect(() => {
-  //   // Retrieve the cart items from local storage
-  //   const storedCartItems = localStorage.getItem("cartItems");
-  //   if (storedCartItems) {
-  //     setCartItems(JSON.parse(storedCartItems));
-  //   }
-  // }, []);
-
-  
+  };
 
   const addToCart = async (item) => {
     
@@ -78,7 +94,7 @@ const Products = () => {
         </Row>
         <Row>
           <Col sm={2}>
-            <Categories />
+            <Categories onCategoryChange={setSelectedCategory}/>
           </Col>
           <Col sm={10}>
            

@@ -3,17 +3,26 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import loginImg from "../images/pic2.jpg";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+//import useSessionTimeout from './useSessionTimeout'; // Import the custom hook
 
 import { CurrentUserContext } from "../context/CurrentUserState";
 
 const Login = () => {
-  const { login } = useContext(CurrentUserContext);
+  const { login, logout } = useContext(CurrentUserContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+
+  const handleTimeout = () => {
+    localStorage.removeItem('current-user');
+    logout();
+    navigate('/login');
+  };
+
+  // useSessionTimeout(1 * 60 * 1000, handleTimeout); // 2 minutes
+
 
   const collectData = async (e) => {
     e.preventDefault();
@@ -45,14 +54,14 @@ const Login = () => {
           navigate("/dashboard");
         }
         
-        setTimeout(() => {
-          // Remove the local storage data
-          localStorage.removeItem("current-user");
+        // setTimeout(() => {
+        //   // Remove the local storage data
+        //   localStorage.removeItem("current-user");
         
-          // Redirect to the login page (adjust the path as needed)
+        //   // Redirect to the login page (adjust the path as needed)
          
-          navigate("/login");
-        }, 2 * 60 * 1000); // 5 minutes in milliseconds
+        //   navigate("/login");
+        // }, 2 * 60 * 1000); // 5 minutes in milliseconds
         
       }
       

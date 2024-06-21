@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Row,Col,Container, Card, Button } from "react-bootstrap";
+import {Row,Col,Container, Card, Button, Modal, } from "react-bootstrap";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import "./productDetails.css";
 
 function ProductDetail (){
     const [product, setProduct] = useState([]);
+    const [show, setShow] = useState(false);
     const { id } = useParams();
 
     
@@ -76,18 +77,7 @@ function ProductDetail (){
 						<h4 class="price">current price: <span>AED {product.price}</span></h4>
             <p class="product-description">{product.description}</p>
 						
-						{/* <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-						<h5 class="sizes">sizes:
-							<span class="size" data-toggle="tooltip" title="small">s</span>
-							<span class="size" data-toggle="tooltip" title="medium">m</span>
-							<span class="size" data-toggle="tooltip" title="large">l</span>
-							<span class="size" data-toggle="tooltip" title="xtra large">xl</span>
-						</h5>
-						<h5 class="colors">colors:
-							<span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
-							<span class="color green"></span>
-							<span class="color blue"></span>
-						</h5> */}
+						
 						<div class="action">
             <Button variant="danger" className="w-100 addToCart" size="lg">
             ADD TO CART
@@ -99,7 +89,36 @@ function ProductDetail (){
             </Row>
           </Col>
         </Row>
+
+        <Button variant="primary" onClick={() => setShow(true)}>
+        Custom Width Modal
+      </Button>
+
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        dialogClassName="right"
+        aria-labelledby="example-custom-modal-styling-title"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-custom-modal-styling-title">
+            Custom Modal Styling
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
+            commodi aspernatur enim, consectetur. Cumque deleniti temporibus
+            ipsam atque a dolores quisquam quisquam adipisci possimus
+            laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
+            accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
+            reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
+            deleniti rem!
+          </p>
+        </Modal.Body>
+      </Modal>
       </Container>
+
       );
 }
 
