@@ -30,6 +30,24 @@ function ProductDetail (){
           });
       }, []);
 
+      const addToCart = async (item) => {
+    
+        let cart = {
+          p_id: item._id,
+         // qty: qty,
+        };
+        console.log("Add to Cart : ", cart);
+    
+        try {
+          const result = await axios.post('http://localhost:5000/api/cart/add-cart', cart);
+          console.log("cart added : ",result);
+        
+          
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+
       const divStyle = {
         padding: '10px',
         borderRadius: '5px',
@@ -76,10 +94,18 @@ function ProductDetail (){
 						</div>
 						<h4 class="price">current price: <span>AED {product.price}</span></h4>
             <p class="product-description">{product.description}</p>
-						
-						
 						<div class="action">
-            <Button variant="danger" className="w-100 addToCart" size="lg">
+            <Button variant="danger" className="w-100 addToCart" size="lg" onClick={(e) => {
+            e.stopPropagation(); // Stop event propagation
+            // addToCart({
+            //   _id,
+            //   title,
+            //   description,
+            //   price,
+            //   catagory_id,
+            //   productImage,
+            // });
+          }}>
             ADD TO CART
           </Button>
 							

@@ -83,7 +83,14 @@ const Products = () => {
   const detailPage = (id) =>{
       //alert("working" + id);
       navigate(`/product-detail/${id}`);
+      try {
+        const result = axios.get('http://localhost:5000/api/',id);
+        console.log("single product : ",result);
       
+        
+      } catch (error) {
+        console.error("Error:", error);
+      }
   }
 
 

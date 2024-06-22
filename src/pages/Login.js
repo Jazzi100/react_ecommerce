@@ -54,15 +54,15 @@ const Login = () => {
           navigate("/dashboard");
         }
         
-        // setTimeout(() => {
-        //   // Remove the local storage data
-        //   localStorage.removeItem("current-user");
-        
-        //   // Redirect to the login page (adjust the path as needed)
+        setTimeout(() => {
+          // Remove the local storage data
+          localStorage.removeItem("current-user");
+          logout();
+          // Redirect to the login page (adjust the path as needed)
          
-        //   navigate("/login");
-        // }, 2 * 60 * 1000); // 5 minutes in milliseconds
-        
+          navigate("/login");
+        //}, 5 * 60 * 1000); // 5 minutes in milliseconds
+        }, 30 * 1000);
       }
       
       
