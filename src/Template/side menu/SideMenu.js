@@ -1,15 +1,13 @@
 import React from "react";
 import Categories from "../../Components/Categories";
-import CartModal from "../../Components/CartModal";
-import Example from "../../Components/Example";
+import AddToCartModal from "../../Components/AddToCartModal";
 
 const SideMenu = () => {
 
     return(
         <>
           <Categories/>
-          <CartModal/>
-          <Example/>
+          <AddToCartModal/>
         </>
     )
 }

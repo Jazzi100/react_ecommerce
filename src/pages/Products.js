@@ -4,12 +4,16 @@ import { Col, Row, Card, Container, Form, Button } from "react-bootstrap";
 import {  useNavigate   } from 'react-router-dom';
 
 import Categories from "../Components/Categories";
+import AddToCartModal from "../Components/AddToCartModal";
+
 import "./productPageStyleSheet.css";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [qty, setQty] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [item, setItem] = useState(null);
   // const [cart, setCart] = useState([]);
   const navigate = useNavigate();
   // useEffect(() => {
@@ -57,7 +61,6 @@ const Products = () => {
   };
 
   const addToCart = async (item) => {
-    
     let cart = {
       p_id: item._id,
       qty: qty,
@@ -67,8 +70,11 @@ const Products = () => {
     try {
       const result = await axios.post('http://localhost:5000/api/cart/add-cart', cart);
       console.log("cart added : ",result);
-    
-      
+      if(result){
+        setItem(item); // Set the item for the modal
+        setShowModal(true); // Show the modal
+      }
+  
     } catch (error) {
       console.error("Error:", error);
     }
@@ -128,6 +134,7 @@ const Products = () => {
             type="number"
             min="1"
             size="sm"
+            defaultValue={1}
             onChange={(e) => setQty(e.target.value)}
             onClick={(e) => e.stopPropagation()}
           />
@@ -151,6 +158,7 @@ const Products = () => {
         >
           Add To Cart
         </Button>
+        
       </Form>
     </Card.Body>
   </div>
@@ -168,6 +176,7 @@ const Products = () => {
           </Col>
         </Row>
       </Container>
+      {showModal && <AddToCartModal show={showModal} item={item} onHide={() => setShowModal(false)} />}
     </>
   );
 };

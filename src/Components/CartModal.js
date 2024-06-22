@@ -1,27 +1,50 @@
-import React, { useState } from 'react';
-import { Button, Offcanvas } from 'react-bootstrap';
+import React, {useState} from 'react';
+import { Offcanvas, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
 
-function CartModal({ name, ...props }) {
-  const [show, setShow] = useState(false);
+function CartModal({ show, onHide, item, placement }) {
+    const [products, setProducts] = useState([]);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+    const fetchProduct = () => {
 
+        let url = "http://localhost:5000/api/product/get-active-products";
+        axios({
+        method: "get",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+        },
+        url: url,
+        })
+        .then((response) => {
+            console.log(response.data);
+            setProducts(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
   return (
-    <>
-      <Button variant="primary" onClick={handleShow} className="me-2">
-       {name}
-      </Button>
-      <Offcanvas show={show} onHide={handleClose} {...props}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
-        </Offcanvas.Body>
-      </Offcanvas>
-    </>
+    <Offcanvas show={show} onHide={onHide} placement={placement}>
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title>Cart</Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body>
+        {/* {console.log("Itemmmmm : "+item._id)}
+        {item && (
+          <div>
+
+            <p>Item added to cart:</p>
+            <p>ID: {item._id}</p>
+            <p>Name: {item.name}</p>
+          </div>
+        )} */}
+
+        <Row>
+            <Col sm={3}>1</Col>
+            <Col sm={9}>2</Col>
+        </Row>
+      </Offcanvas.Body>
+    </Offcanvas>
   );
 }
 
