@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Col, Row, Card, Container, Form, Button } from "react-bootstrap";
 import {  useNavigate   } from 'react-router-dom';
 
 import Categories from "../Components/Categories";
 import AddToCartModal from "../Components/AddToCartModal";
+import { CurrentUserContext } from "../context/CurrentUserState";
 
 import "./productPageStyleSheet.css";
 
@@ -14,36 +15,28 @@ const Products = () => {
   const [qty, setQty] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [item, setItem] = useState(null);
-  // const [cart, setCart] = useState([]);
+  
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   axios({
-  //     method: "get",
-  //     headers: {
-  //       "Access-Control-Allow-Origin": "*",
-  //     },
-  //     url: "http://localhost:5000/api/product/get-active-products",
-  //   })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setProducts(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
 
-
+  const { currentUser } = useContext(CurrentUserContext);
+  let currentUserId;
+  if (currentUser && currentUser?.user) {
+    currentUserId = currentUser.user._id;
+  }
+  
+//  console.log('current user on product page : ' , currentUser);
+//  console.log('current user ID : ' , currentUser.user._id);
   useEffect(() => {
     fetchProducts(selectedCategory);
   }, [selectedCategory]);
+
+  
 
   const fetchProducts = (categoryId) => {
     let url = "http://localhost:5000/api/product/get-active-products";
     if (categoryId) {
       url += `?categoryId=${categoryId}`;
     }
-
     axios({
       method: "get",
       headers: {
@@ -61,9 +54,14 @@ const Products = () => {
   };
 
   const addToCart = async (item) => {
+    if (!currentUser || !currentUser) {
+      navigate("/login");
+      return;
+    }
     let cart = {
       p_id: item._id,
       qty: qty,
+      user_id: currentUserId,
     };
     console.log("Add to Cart : ", cart);
 
@@ -183,7 +181,7 @@ const Products = () => {
           </Col>
         </Row>
       </Container>
-      {showModal && <AddToCartModal show={showModal} item={item} onHide={() => setShowModal(false)} />}
+      {showModal && <AddToCartModal show={showModal} item={item} qty={qty} onHide={() => setShowModal(false)} />}
     </>
   );
 };

@@ -48,21 +48,24 @@ const Login = () => {
           text: result.message,
         });
       }else{
+        console.log("Login hoaaaa : " + result.data);
         login(result.data);
-        localStorage.setItem("current-user", JSON.stringify(result));
+        localStorage.setItem("current-user", JSON.stringify(result.data));
         if (result.data.user.roleType === 1) {
           navigate("/dashboard");
+        }else{
+          navigate("/products");
         }
         
-        setTimeout(() => {
-          // Remove the local storage data
-          localStorage.removeItem("current-user");
-          logout();
-          // Redirect to the login page (adjust the path as needed)
+        // setTimeout(() => {
+        //   // Remove the local storage data
+        //   localStorage.removeItem("current-user");
+        //   logout();
+        //   // Redirect to the login page (adjust the path as needed)
          
-          navigate("/login");
-        //}, 5 * 60 * 1000); // 5 minutes in milliseconds
-        }, 30 * 1000);
+        //   navigate("/login");
+        // //}, 5 * 60 * 1000); // 5 minutes in milliseconds
+        // }, 30 * 1000);
       }
       
       
