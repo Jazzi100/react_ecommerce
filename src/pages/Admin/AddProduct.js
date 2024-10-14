@@ -12,7 +12,7 @@ function AddProduct() {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [productImage, setProductImage] = useState("");
+  const [productImage, setProductImage] = useState(null);
 
   
 
@@ -70,12 +70,12 @@ function AddProduct() {
         text: result.data.message,
       });
 
-      // setTitle("");
-      // setDescription("");
-      // setPrice("");
-      // setQuantity("");
-      // setCategory("");
-      // setProductImage("");
+      setTitle("");
+      setDescription("");
+      setPrice("");
+      setQuantity("");
+      setCategory("");
+      setProductImage(null);
     }
   };
 
