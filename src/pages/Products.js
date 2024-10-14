@@ -12,7 +12,7 @@ import "./productPageStyleSheet.css";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [qty, setQty] = useState("");
+  const [qty, setQty] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [item, setItem] = useState(null);
   
@@ -140,7 +140,7 @@ const Products = () => {
             min="1"
             size="sm"
             defaultValue={1}
-            onChange={(e) => setQty(e.target.value)}
+            onChange={(e) => setQty(parseInt(e.target.value))}
             onClick={(e) => e.stopPropagation()}
           />
         </Form.Group>
@@ -181,7 +181,7 @@ const Products = () => {
           </Col>
         </Row>
       </Container>
-      {showModal && <AddToCartModal show={showModal} item={item} qty={qty} onHide={() => setShowModal(false)} />}
+      {showModal && <AddToCartModal show={showModal} item={item} qty={qty} userId={currentUserId} onHide={() => setShowModal(false)} />}
     </>
   );
 };

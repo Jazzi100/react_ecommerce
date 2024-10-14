@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   Row,
@@ -11,8 +11,7 @@ import {
 import {  useNavigate   } from 'react-router-dom';
 import axios from "axios";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
-
+import { CurrentUserContext } from "../context/CurrentUserState";
 
 
 const Cart = () => {
@@ -22,13 +21,22 @@ const Cart = () => {
   const [qty, setQty] = useState();
   const [price, setPrice] = useState(0);
 
+
+  const { currentUser } = useContext(CurrentUserContext);
+  let currentUserId;
+  if (currentUser && currentUser?.user) {
+    currentUserId = currentUser.user._id;
+  }
+
+  console.log("current user id on cart page : ", currentUserId );
+
   useEffect(() => {
     axios({
       method: "get",
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
-      url: "http://localhost:5000/api/cart/get-cart",
+      url: `http://localhost:5000/api/cart/get-cart?userId=${currentUserId}`,
     })
       .then((response) => {
         console.log("API Response : "+ JSON.stringify(response.data.cart));
@@ -163,7 +171,7 @@ const updateTotal = (updatedCart) => {
   
 
   let cartView = "";
-  if(cart.length > 0){
+  if(cart?.length > 0){
     cartView = <Container fluid className="p-3">
     <Row>
       <Col sm={8}>
