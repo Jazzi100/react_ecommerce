@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, createContext,  } from "react";
 
 import {
   Row,
@@ -11,16 +11,22 @@ import {
 import {  useNavigate   } from 'react-router-dom';
 import axios from "axios";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { CurrentUserContext } from "../context/CurrentUserState";
+import { CurrentUserContext } from "../context/CurrentUserState";                                                                                                   
+import useFetchProducts from '../Hooks/useFetchProducts';
 
+export const CartContext = createContext();
 
-const Cart = () => {
+const Cart = ({children}) => {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [qty, setQty] = useState();
   const [price, setPrice] = useState(0);
-
+  const [cartProducts, setCartProducts] = useState([]);
+  const [cartSize, setCartSize] = useState(0);
+  
+  // const [filters, setFilters] = useState({ categoryId: null, userId: currentUserId, productId: null });
+  // const { products, loading, error } = useFetchProducts(filters);
 
   const { currentUser } = useContext(CurrentUserContext);
   let currentUserId;
@@ -29,68 +35,17 @@ const Cart = () => {
   }
 
   console.log("current user id on cart page : ", currentUserId );
+  const [filters, setFilters] = useState({ categoryId: null, userId: currentUserId, productId: null });
+  const { products, loading, error } = useFetchProducts(filters);
 
   useEffect(() => {
-    axios({
-      method: "get",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      url: `http://localhost:5000/api/cart/get-cart?userId=${currentUserId}`,
-    })
-      .then((response) => {
-        console.log("API Response : "+ JSON.stringify(response.data.cart));
-        setCart(response.data.cart)
-      //   // Quantity
-      //   const quantities = response.data.cart.map(item => item.quantity);
-      //   // console.log("Quantities in response : " + quantities);
-      //   setQty(quantities);
-      //   // Price
-      //   const prices = response.data.cart.map(item => item.product_id.price);
-      //   // console.log("Prices in response : " + prices);
-      //   // Calculate total price for each item
-      //   const itemTotalPrices = prices.map((price, index) => price * quantities[index]);
-
-      // // Calculate total quantity and total price
-      // // const totalQuantity = response.data.reduce((acc, item) => acc + item.quantity, 0);
-      // // const totalPrice = response.data.cart.reduce(
-      // //   (acc, item) => acc + item.quantity * item.product_id.price,
-      // //   0
-      // // );
-
-      // let totalPrice = 0;
-      // let totalQuantity = 0;
-      // response.data.cart.forEach(item => {
-      //   totalPrice += item.product_id.price * item.quantity;
-      //   totalQuantity += item.quantity;
-      // });
-
-      // setTotal(totalPrice);
-      // console.log("Total Price : " + totalPrice);
-      // setQty(totalQuantity);
-      
- 
-      // setQty(quantities);
-      // setPrice(prices);
-
-// Calculate total price
-let totalPrice = 0;
-response.data.cart.forEach(item => {
-    totalPrice += item.product_id.price * item.quantity;
-});
-
-setTotal(totalPrice);
-console.log("Total Price : " + totalPrice);
+    setCart(products);
+    setCartSize(products.length);
+  }, [products]);
 
 
-      
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  console.log("Products on cart Pageeeeee : ", cartSize);
 
-  
 
   const handleDecrement = (cart_id) => {
     console.log("Decrement : " + cart_id);
@@ -172,7 +127,7 @@ const updateTotal = (updatedCart) => {
 
   let cartView = "";
   if(cart?.length > 0){
-    cartView = <Container fluid className="p-3">
+    cartView = <Container>
     <Row>
       <Col sm={8}>
         {cart.length > 0 ? (
@@ -278,7 +233,11 @@ const updateTotal = (updatedCart) => {
     <>
     <h3>Cart</h3>
       {cartView}
+      <CartContext.Provider value={{ cartSize, setCartSize }}>
+      {children}
+    </CartContext.Provider>
     </>
+    
   );
 };
 

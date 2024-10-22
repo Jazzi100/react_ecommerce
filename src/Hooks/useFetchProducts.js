@@ -8,14 +8,14 @@ const useFetchProducts = ({categoryId, userId, productId}) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        
+        console.log("User Id in fetch product hook : " ,userId );
         const fetchProduct = async () => {
             try {
                 let url = `http://localhost:5000/api/cart/get-cart`;
                 const params = new URLSearchParams();
                 
                 if (categoryId) params.append('categoryId', categoryId);
-                if (userId) params.append('userId', userId);
+                if (userId) params.append('user_id', userId);
                 if (productId) params.append('productId', productId);
                 
                 const queryString = params.toString();
@@ -26,7 +26,8 @@ const useFetchProducts = ({categoryId, userId, productId}) => {
                         'Access-Control-Allow-Origin': '*',
                     },
                 });
-                setProducts(response.data.cart);
+
+                setProducts(response.data);
             } catch (error) {
                 setError(error);
             } finally {

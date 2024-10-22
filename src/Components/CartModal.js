@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Offcanvas, Row, Col, Card, Button } from 'react-bootstrap';
-import axios from "axios";
+
 import useFetchProducts from '../Hooks/useFetchProducts';
 
 function CartModal({ show, onHide, item, qty, placement, userId }) {
+  console.log("user ID in cart modal : " , userId);
   const [cartProducts, setCartProducts] = useState([]);
   
   const [cartTotal, setCartTotal] = useState(0);
-  
+  console.log("user ID in cart Modal : ", userId)
   const [filters, setFilters] = useState({ categoryId: null, userId: userId, productId: null });
   const { products, loading, error } = useFetchProducts(filters);
   
+  console.log("Cart products : ", cartProducts);
     
   useEffect(() => {
     setCartProducts(products);
   }, [products]);
+
+  
 
   useEffect(() => {
     let total = 0;
@@ -92,7 +96,7 @@ function CartModal({ show, onHide, item, qty, placement, userId }) {
                 </Row> */}
 
                 {/* {_id, product_id, user_id, quantity, status, created_at, updated_at, __v} */}
-
+                
                
 
                 {cartProducts.length > 0 ? (
@@ -120,7 +124,7 @@ function CartModal({ show, onHide, item, qty, placement, userId }) {
                         </Col>
 
                         <Col sm={4}>
-                          <span style={{ display: 'flex', justifyContent: 'flex-end' }}>AED: {product_id.price * quantity}.00</span>
+                          <span style={{ display: 'flex', justifyContent: 'flex-end' }}>AED: {(product_id.price * quantity).toFixed(2)}</span>
                           
                         </Col>
                     </Row>
@@ -129,14 +133,13 @@ function CartModal({ show, onHide, item, qty, placement, userId }) {
                   <div>No products in the cart</div>
                 )}
 
-              
-                {/* ///////////////////////////////////////////// */}
-                <div style={{ position: 'absolute', bottom: 0, left: '10px', right: '10px', margin: '0 auto' }}>
+            
+                <div style={{  bottom: 0, left: '10px', right: '10px', margin: '0 auto' }}>
                 <hr/>
                 <Row>
                     <Col sm={12} style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <span style={{ color: '#dc3545' }}><h4>Total</h4></span>
-                        <span>AED: {cartTotal}.00 &nbsp;</span>
+                        <span><b>AED: {cartTotal.toFixed(2)}</b> &nbsp;</span>
                     </Col>
                 </Row>
                 <Row>
@@ -158,7 +161,7 @@ function CartModal({ show, onHide, item, qty, placement, userId }) {
                     </Col>
                     
                 </Row>
-                </div>
+                </div> 
             </Offcanvas.Body>
         </Offcanvas>
     );

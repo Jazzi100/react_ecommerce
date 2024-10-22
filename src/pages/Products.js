@@ -15,20 +15,20 @@ const Products = () => {
   const [qty, setQty] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [item, setItem] = useState(null);
-  
+
+  // State for storing the current user's ID
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserState, setCurrentUserState] = useState(null);
   const navigate = useNavigate();
 
   const { currentUser } = useContext(CurrentUserContext);
-  let currentUserId;
-  if (currentUser && currentUser?.user) {
-    currentUserId = currentUser.user._id;
-  }
   
-//  console.log('current user on product page : ' , currentUser);
-//  console.log('current user ID : ' , currentUser.user._id);
   useEffect(() => {
     fetchProducts(selectedCategory);
-  }, [selectedCategory]);
+    setCurrentUserState(currentUser);
+    setCurrentUserId(currentUser?.user?._id);  // Update the state with user ID
+
+  }, [selectedCategory, currentUser]);
 
   
 
@@ -54,10 +54,13 @@ const Products = () => {
   };
 
   const addToCart = async (item) => {
-    if (!currentUser || !currentUser) {
-      navigate("/login");
-      return;
-    }
+    console.log("currentUser value: ", currentUser); // Check if currentUser is populated here
+
+  if (!currentUser) {
+    navigate("/login");
+    return;
+  }
+  
     let cart = {
       p_id: item._id,
       qty: qty,
@@ -127,6 +130,7 @@ const Products = () => {
     <Card.Img
       variant="top"
       height="150px"
+      width="1000px"
       src={`http://localhost:5000/${productImage}`}
     />
     <Card.Body>
@@ -151,6 +155,7 @@ const Products = () => {
           id={_id}
           onClick={(e) => {
             e.stopPropagation(); // Stop event propagation
+            console.log("add to cart button clicked");
             addToCart({
               _id,
               title,

@@ -3,10 +3,14 @@ import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 import { CurrentUserContext } from "../context/CurrentUserState";
+import { CartContext } from "../pages/Cart";
 
 function Header() {
   const navigate = useNavigate();
   const u = useContext(CurrentUserContext);
+
+  const cartSize = useContext(CartContext);
+  console.log("Cart Size in header : ", cartSize);
 
   const userObject = localStorage.getItem("current-user");
 
